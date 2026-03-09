@@ -4,6 +4,27 @@
 Meshtastic Map Tile Generator for T-Deck
 Generates map tiles from various sources for offline use
 """
+import subprocess
+import sys
+import importlib.util
+
+def ensure_poetry_env():
+    # 1. Check if we are already running inside a Poetry virtualenv
+    # POETRY_ACTIVE is set by 'poetry shell'
+    # VIRTUAL_ENV is set by 'poetry run' or activated venvs
+    if os.environ.get("POETRY_ACTIVE") or os.environ.get("VIRTUAL_ENV"):
+        return
+
+    print("--- Not in a virtual environment. Switching to Poetry... ---")
+    try:
+        # 2. Try to run the script via 'poetry run'
+        # This automatically handles installation/updates if configured
+        # and points to the correct interpreter.
+        os.execvp("poetry", ["poetry", "run", "python"] + sys.argv)
+    except FileNotFoundError:
+        print("Error: 'poetry' is not installed on your system.")
+        sys.exit(1)
+
 
 import os
 import sys
@@ -493,4 +514,6 @@ def main():
     )
 
 if __name__ == "__main__":
+    import os
+    ensure_poetry_env()
     main()
