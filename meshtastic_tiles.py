@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Meshtastic Map Tile Generator for T-Deck
 Generates map tiles from various sources for offline use
